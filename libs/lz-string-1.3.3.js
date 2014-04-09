@@ -659,7 +659,17 @@ var LZString = {
     }
   }
 };
-
-if( typeof module !== 'undefined' && module != null ) {
-  module.exports = LZString
+//AMD support
+if (typeof define === 'function' && define.amd) {
+    define(function () { return LZString; });
+// CommonJS and Node.js module support.
+} else if (typeof exports !== 'undefined') {
+    // Support Node.js specific `module.exports` (which can be a function)
+    if (typeof module !== 'undefined' && module.exports) {
+        exports = module.exports = LZString;
+    }
+    // But always support CommonJS module 1.1.1 spec (`exports` cannot be a function)
+    exports.LZString = LZString;
+} else {
+    window.LZString = LZString;
 }
